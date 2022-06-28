@@ -17,10 +17,12 @@ for i in range(11):
     list.append(i)
 print(list)
 print("=" * 40)
-print(seats)
 
 
 def displayBookings(seats):
+    for row in seats:
+        print(row)
+    print(" ")
     print("원하시는 좌석의 행번호를 입력하세요(종료는 -1)")
     hang = int(input())
     print("원하시는 좌석의 열번호를 입력하세요(종료는 -1)")
