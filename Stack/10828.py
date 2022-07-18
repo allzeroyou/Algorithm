@@ -15,10 +15,10 @@ import sys
 stack = []
 
 count = int(sys.stdin.readline())
-input = sys.stdin.readline()
+input = sys.stdin.readline
 
 for i in range(count):
-    word = input()
+    word = input().strip()
 
     if "push" in word:
         word=word.strip('push ')
