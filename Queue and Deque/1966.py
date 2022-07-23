@@ -5,11 +5,32 @@
 
 '''
 
-import collections
+from collections import deque
+import sys
 
-cnt = int(input())
+test_case = int(input())
 
+for _ in range(test_case):
+    n, m =map(int, input().split())
+    print_list = list(map(int, input().split()))
+    check_list = [0 for _ in range(n)]
+    check_list[m]=1
 
+    count = 0
+    while True:
+        if print_list[0]==max(print_list):
+            count += 1
+            if check_list[0]==max(print_list):
+                count += 1
 
-# for i in range(cnt):
-
+                if check_list[0] != 1:
+                    del print_list[0]
+                    del check_list[0]
+                else:
+                    print(count)
+                    break
+        else:
+            print_list.append(print_list[0])
+            check_list.append(check_list[0])
+            del print_list[0]
+            del check_list[0]
