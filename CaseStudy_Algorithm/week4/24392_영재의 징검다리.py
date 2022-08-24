@@ -1,28 +1,28 @@
 # bottom-up
-MOD= 1_000_000_007
+MOD = 1_000_000_007
 
-N, M =map(int, input().split())
+N, M = map(int, input().split())
 board = [list(map(int, input().split())) for _ in range(N)]
 
-dp = [[0] * M  for _ in range(N)] # 바텀업-> 초기값 0
+dp = [[0] * M for _ in range(N)]  # 바텀업-> 초기값 0
 
 for j in range(M):
-    dp[N-1][j] = board[N-1][j] # #강화유리면 1 일반유리면 0
+    dp[N - 1][j] = board[N - 1][j]  # 강화유리면 1 일반유리면 0 -> board값 그대로 넣어줘도 ok
 
-for i in range(N-2, -1, -1): # 큰수 부터 작은수로 역순!
+for i in range(N - 2, -1, -1):  # 큰수 부터 작은수로 역순!
     for j in range(M):
         # 일반유리면 볼것도없이 그 칸에 올 수 없음
-        if board[i][j]: # 강화유리라면
-            dp[i][j] = dp[i+1][j]
+        if board[i][j]:  # 강화유리라면
+            dp[i][j] = dp[i + 1][j]
 
-            if j > 0: # 왼쪽
-                dp[i][j] += dp[i+1][j-1]
-            if j < M-1:
-                dp[i][j] += dp[i+1][j+1]
+            if j > 0:  # 왼쪽
+                dp[i][j] += dp[i + 1][j - 1]
+            if j < M - 1:
+                dp[i][j] += dp[i + 1][j + 1]
                 dp[i][j] %= MOD
 
 ans = 0
-
+# dp 테이블을 돌기
 for j in range(M):
     ans += dp[0][j]
     ans %= MOD
