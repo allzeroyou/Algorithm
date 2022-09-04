@@ -15,7 +15,7 @@ sys.setrecursionlimit(10 ** 8)  # 재귀 제한 풀기
 
 def dfs(now):
     for nxt in range(N):    # nxt: next/ 한줄을 쭉 돌면서
-        if adj[now][nxt] and not chk[nxt]: # 1이 있다면 연결되어 있고, 방문을 한 적이 없다면
+        if adj[now][nxt] and not chk[nxt]: # 1이 있다면 연결 되어 있고, 방문을 한 적이 없다면
             chk[nxt] = True
             dfs(nxt)
 
