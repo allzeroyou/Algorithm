@@ -4,12 +4,12 @@ dy = (0, 1, 0, -1)
 dx = (1, 0, -1, 0)
 
 
-def is_valid_coord(y, x):
+def is_valid_coord(y, x): # 범위체크
     return 0 <= y < N and 0 <= x < N
 
 
 def bfs(sy, sx):
-    chk[sy][sx] = True
+    chk[sy][sx] = True  # 방문체크
     q = deque()
     q.append((sy, sx))
     while q:
@@ -22,11 +22,11 @@ def bfs(sy, sx):
                 chk[ny][nx] = True
                 q.append((ny, nx))
 
-
+# 입력받기
 N = int(input())
 board = [list(map(int, input().split())) for _ in range(N)]
-lo = min(min(row) for row in board)
-hi = max(max(row) for row in board)
+lo = min(min(row) for row in board) # low
+hi = max(max(row) for row in board) # high
 ans = 1
 
 for water in range(lo, hi):
