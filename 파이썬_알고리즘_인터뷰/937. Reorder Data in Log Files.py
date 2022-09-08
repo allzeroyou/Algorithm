@@ -2,19 +2,20 @@ from typing import List
 
 class Solution:
     def reorderLogFiles(self, logs: List[str]) -> List[str]:
-        num_list = []  # 숫자로그
-        word_list = []  # 문자로그
+        word_lst = []
+        digit_lst = []
         for i in logs:
-            word = i.split()
-            if word[1].isdigit():  # 숫자-True
-                num_list.append(i)
-
+            idf = i.split() # 띄어쓰기 분리
+            if idf[1].isdigit(): # 숫자 로그 판별
+                digit_lst.append(i)
             else:
-                word_list.append(i)
+                word_lst.append(i)
+        word_lst.sort(key=lambda x:(x.split()[1:], x.split()[0])) # 문자가 동일한 경우 식별자 순으로
+        # 람다는 sort()의 예와 같이 함수와 함께 사용하는 것이 일반적인 용도임
+        return word_lst+digit_lst
 
-        word_list.sort(key=lambda x: (x.split()[1:], x.split()[0]))
-        return word_list + num_list
+
 
 
 s = Solution()
-print(s.reorderLogFiles(["a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"]))
+print(s.reorderLogFiles(["dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"]))

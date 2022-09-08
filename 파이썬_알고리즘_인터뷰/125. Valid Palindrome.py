@@ -1,7 +1,10 @@
 import re
 
-word = input()
-temp = re.sub("[^a-z0-9]","", word.lower())
-print(temp == temp[::-1])
+class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        s=s.lower()
+        s=re.sub('[^a-z0-9]','',s)
+        return s==s[::-1]
 
-# A man, a plan, a canal: Panama
+s = Solution()
+print(s.isPalindrome("A man, a plan, a canal: Panama"))
