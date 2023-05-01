@@ -1,7 +1,6 @@
 # 8x8 좌표평면
 # 행 위치 표현시 1~8
 # 열 위치 표현시 a~h
-from tensorflow.python.autograph.operators.py_builtins import next_
 
 # 요구사항 대로 충실히 구현
 # 나이트의 8가지 방향 -> 방향벡터 정의
