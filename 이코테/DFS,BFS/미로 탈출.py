@@ -11,11 +11,13 @@
 
 from collections import deque
 
+miro = []
 n, m = map(int, input().split())
 # 2차원 리스트의 맵 정보 입력받기
-miro = []
-for i in range(n):
+
+for _ in range(n):
     miro.append(list(map(int, input())))
+
 # 이동할 4가지 방향 설정
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
@@ -34,7 +36,7 @@ def bfs(x, y):
             nx = x + dx[i]
             ny = y + dy[i]
             # 미로 찾기 공간을 벗어난 경우 무시
-            if nx < 0 or ny < 0 or nx >= n or ny >= n:
+            if nx < 0 or ny < 0 or nx >= n or ny >= m: # n인지 m인지 잘 확인하자
                 continue
             # 벽인 경우 무시
             if miro[nx][ny] == 0:
@@ -47,4 +49,16 @@ def bfs(x, y):
     return miro[n - 1][m - 1]
 
 
-print(bfs(0, 0)) # 왜 처음 시작 위치인 1,1이 아니라 0,0이지?
+print(bfs(0, 0))  # 왜 처음 시작 위치인 1,1이 아니라 0,0이지?
+# 리스트 인덱스 index out of range 안내게 나려고
+# The reason the starting position is (0, 0) instead of (1, 1) in the code is because Python uses zero-based indexing for lists. In Python, the index of the first element in a list is 0, not 1.
+
+
+'''
+5 6
+101010
+111111
+000001
+111111
+111111
+'''
