@@ -7,11 +7,8 @@ for _ in range(t):  # 테스트 케이스
     x1, y1, x2, y2 = map(int, input().split())
 
     n = int(input())  # 행성계 개수
-    # 시작점, 도착점이 각각 원을 지나야 하는지 여부
-    start_cnt = False
-    finish_cnt = False
-    # 원을 지나는 개수
-    ans = 0
+    ans = 0  # 원을 지나는 개수
+
     for _ in range(n):
         cx, cy, r = map(int, input().split())
         # 거리 계산
