@@ -1,10 +1,24 @@
-n = int(input())
-arr = list(map(int, input().split()))
+n = int(input())  # 수열의 크기
+arr = list(map(int, input().split()))  # 수열
 
-dp = [1] * n  # 자기자신으로 이뤄진 수열은 길이가 1이므로 1으로 초기화
+cache = [-1] * n
 
-for cur in range(1, n):
-    for front in range(0, cur):
-        if arr[front] < arr[cur]:  # 나보다 앞에 있는게 더 작다면(크거나 같다면 가장 긴 증가하는 부분 수열이 될 수 없다)
-            dp[cur] = max(dp[cur], dp[front] + 1)  # 이전 숫자들 중 최댓값 구하고, 길이에 1 더해줌
-print(max(dp))
+
+def lis(i):
+    if cache[i] != -1:
+        return cache[i]
+
+    ans = 1
+    for nxt in range(i + 1, n):
+        if arr[i] < arr[nxt]:
+            ans = max(ans, lis(nxt) + 1)
+    cache[i] = ans
+    return ans
+
+
+max_length = 0  # Variable to store the maximum LIS length
+
+for i in range(n):
+    max_length = max(max_length, lis(i))
+
+print(max_length)
