@@ -1,16 +1,15 @@
 n = int(input())
-card = list(map(int, input().split()))
+cards = list(map(int, input().split()))  # n개의 숫자카드
+dic = {}  # 딕셔너리 자료구조사용
 m = int(input())
-section_numbers = list(map(int, input().split()))  # 숫자카드인지 아닌지 구할 m개의 정수
+nums = list(map(int, input().split()))  # m개의 정수
 
-dic = {}
+for num in nums:
+    dic[num] = 0
 
-for s in section_numbers:
-    dic[s] = 0
-
-for c in card:
-    if c in dic:
-        dic[c] = 1
+for card in cards:
+    if card in dic:
+        dic[card] = 1
 
 for d in dic:
     print(dic[d], end=' ')
