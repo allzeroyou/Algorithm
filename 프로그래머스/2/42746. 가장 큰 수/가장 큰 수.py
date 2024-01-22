@@ -1,12 +1,8 @@
 def solution(numbers):
     answer = ''
-
-    def three_number(num):
-        str_num = str(num)
-        three = (str_num * 3)
-        return three
-
-    numbers.sort(key=lambda x: three_number(x), reverse=True)
-
-    answer = ''.join(map(str, numbers))
-    return str(int(answer))
+    numbers= list(map(str, numbers))
+    numbers.sort(key=lambda x:x*3, reverse=True) # 세자리수까지 비교
+    # 앞의 0을 제거하기 위해 int형 변환 후 str 변환
+    answer= str(int(''.join(numbers)))
+    
+    return answer
