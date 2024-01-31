@@ -1,3 +1,6 @@
+# 컴파일 OK
+# BUT NOT PASS
+# 수정 필요
 from collections import deque
 
 
