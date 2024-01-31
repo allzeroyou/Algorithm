@@ -13,7 +13,7 @@ def solution(N, stages):
     player = len(stages)
 
     for i in range(1, N + 1):
-        cnt = stages.count(i)# 스테이지에서 머물러 있는 플레이어 수
+        cnt = stages.count(i)  # 스테이지에서 머물러 있는 플레이어 수
 
         # for s in stages:
         #     if i == s:  # 현재 스테이지에서 실패했다면
@@ -29,10 +29,11 @@ def solution(N, stages):
     # 실패율을 기준으로 각 스테이지 내림차순으로 정렬
     answer = sorted(answer, key=lambda f: f[1], reverse=True)
 
-    #print(answer)
+    # print(answer)
     # 스테이지 번호 출력
     answer = [i[0] for i in answer]
     return answer
 
+
 print(solution(5, [2, 1, 2, 6, 2, 4, 3, 3]))
-print(solution(4, [4,4,4,4,4]	))
+print(solution(4, [4, 4, 4, 4, 4]))
