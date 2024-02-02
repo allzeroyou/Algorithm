@@ -1,6 +1,6 @@
 def solution(name):
     answer = 0
-    min_move = len(name) - 1
+    min_move = float('inf')  # 무한대로 초기화하여 어떤 값보다 큰 값으로 설정
     next = 0
 
     for i, char in enumerate(name):
