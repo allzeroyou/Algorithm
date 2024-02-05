@@ -1,23 +1,29 @@
-# 정점 개수
-N = int(input())
- 
-inputMap = [[0 for col in range(0, N)] for row in range(0, N)]
- 
-for i in range(0, N) :
-    for j, m in enumerate(map(int, input().split())) :
-        inputMap[i][j] = m
- 
-#플로이드 워셜 알고리즘(Floyd Warshall Algorithm) 이용
-# 모든 정점에 대한 경로를 계산하는 알고리즘
-for k in range(0, N) :
-    for i in range(0, N) :
-        for j in range(0, N):
-            if inputMap[i][k] and inputMap[k][j] :
-                inputMap[i][j] = 1
- 
-for i in range(0, N) :
-    _str = ""
-    for j in range(0, N) :
-        _str += str(inputMap[i][j]) +  " "
-    print(_str)
- 
+# 정점 개수 n
+from collections import deque
+
+n = int(input())
+adj = [list(map(int, input().split())) for _ in range(n)]
+
+
+def bfs(start):
+    # 1. 큐
+    q = deque()
+    q.append(start)
+
+    # 2. 큐에 빌때까지
+    while q:
+        # 큐에서 하나 빼기
+        a = q.popleft()
+        for i in range(n):
+            if not visited[start][i] and adj[a][i]:  # 방문하지 않았고, 간선 존재한다면
+                q.append(i)
+                visited[start][i] = 1
+
+
+visited = [[0] * n for _ in range(n)]
+
+for i in range(n):
+    bfs(i)
+
+for i in visited:
+    print(*i)
