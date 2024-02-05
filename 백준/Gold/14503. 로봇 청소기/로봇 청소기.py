@@ -1,47 +1,32 @@
-# dr: 북, 동, 남, 서
-di = [-1, 0, 1, 0]
-dj = [0, 1, 0, -1]
+#북-동-남-서
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
 
-# solution
-def robotic_vacuum(ci, cj, dr):
-  cnt = 0 # 청소한 칸
-  
-  while 1: # 벽이라면 종료
-    # [1] 현재 위치를 청소
-    arr[ci][cj]=2
-    cnt +=1
-    
-    # [2] 왼쪽 방향부터 탐색
-    flag = 1
-    while flag==1:
-      for i in ((dr+3)%4, (dr+2)%4, (dr+1)%4, dr):
-        ni = ci + di[i]
-        nj = cj + dj[i]
-        if arr[ni][nj]==0: # 미청소 영역
-          ci, cj, dr = ni, nj, i
-          flag = 0
-          break
-      else: # 4방향 모두 미청소 영역 없음 -> 후진
-        bi = ci - di[dr]
-        bj = cj - dj[dr]
-        if arr[bi][bj] ==1: # 벽
-          return cnt
-        else:
-          ci, cj = bi, bj
-  # -1 이라면 내부 로직이 이상하다는 의미
-  return -1 
-        
-        
-      
-  
+def dfs(x, y, d): #청소시작 
+    global ans #정답변수
+    if a[x][y] == 0: #청소가능한 부분 
+        a[x][y] = 2 #청소완료
+        ans += 1 #정답 + 1
+    for _ in range(4): #상하좌우탐색
+        nd = (d + 3) % 4 #왼쪽으로 회전 
+        nx = x + dx[nd] #새로운 x좌표
+        ny = y + dy[nd] #새로운 y좌표
+        if a[nx][ny] == 0: #청소가능하면 
+            dfs(nx, ny, nd) #dfs탐색 
+            return
+        d = nd 
+    nd = (d + 2) % 4 #뒤쪽 방향
+    nx = x + dx[nd]
+    ny = y + dy[nd]
+    if a[nx][ny] == 1: #바로 뒤쪽이 벽 
+        return #멈추기
+    dfs(nx, ny, d) #뒤로 후진에서 탐색 
 
-# 입력
+
 n, m = map(int, input().split())
-si, sj, dr = map(int, input().split()) # start i, start j, dr(direction) 설정
-# 방
-arr = []
-for _ in range(n):
-    arr.append(list(map(int, input().split())))
+x, y, d = map(int, input().split())
+a = [list(map(int, input().split())) for _ in range(n)]
 
 ans = 0
-print(robotic_vacuum(si, sj, dr))
+dfs(x, y, d)
+print(ans)
