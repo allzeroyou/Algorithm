@@ -2,7 +2,7 @@
 ![icandoit](https://github.com/allzeroyou/Algorithm/assets/71822139/392756f4-cc47-4f82-8ff4-490d1206c8ca)
 
 > 시작하면 상위 10% 지속하면 상위 1%
-
+> 알고리즘 문제 풀이 레포입니다.
 
 ## 📅 시작날짜: 2022년 6월 11일 ~
 
