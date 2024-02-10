@@ -11,7 +11,7 @@
 - 언어: 파이썬
 
 ## 💌 commit 규칙
-  - 1년 365일동안 매일 하루 최소 하나 이상의 알고리즘 문제 풀기
+  - 매일 하루 최소 하나 이상 알고리즘 문제 풀기
   - commit 방식: [백준허브](chrome-extension://ccammcjdkpgjmcpijpahlehmapgmphmk/welcome.html)
 
 ## ⭐️ 이렇게 공부하기
