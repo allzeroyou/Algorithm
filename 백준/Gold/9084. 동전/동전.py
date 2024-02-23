@@ -1,23 +1,28 @@
-import sys
+# 화폐단위
+# 1, 5, 10, 50, 100, 500원
+# 정수 금액 만들기
+# 30원: 1원*30개, 10원*2개+5원*2
 
-input = sys.stdin.readline
+tc = int(input())
 
-t = int(input())
-for _ in range(t):
+for t in range(tc):
     n = int(input())
-    coins = list(map(int, input().split()))
-    m = int(input())
+    coin = list(map(int, input().split()))
+    coin.insert(0, 0)  # 0번째 인덱스에 0을 삽입
+    money = int(input())
 
-    # memoization을 위한 리스트 선언
-    d = [0] * (m + 1)
-    d[0] = 1
+    # cache
+    # 2차원 배열 생성
+    cache = [[0] * (money + 1) for _ in range(n + 1)]
+    # 0으로 만드는 경우의 수는 1가지
+    for i in range(n + 1):
+        cache[i][0] = 1
+    # 2차원 배열 채우기
+    for i in range(1, n + 1):
+        for j in range(1, money + 1):
+            cache[i][j] = cache[i - 1][j]
 
+            if j - coin[i] >= 0:  # 음수는 계산하지 않음
+                cache[i][j] += cache[i][j - coin[i]] # 현재 값: n-자기 코인값
 
-    for coin in coins:
-        for i in range(m + 1):
-            # a_(i-k) 를 만드는 방법이 존재한다면 
-            # 이전 경우의 수에 현재 동전으로 만들 수 있는 경우의 수를 더한다.
-            if i >= coin:
-                d[i] += d[i - coin]
-
-    print(d[m])
+    print(cache[n][money])
