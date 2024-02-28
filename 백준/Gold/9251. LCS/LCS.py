@@ -1,20 +1,17 @@
-# 문자열 x, y 입력
-x = list(input())
-y = list(input())
 
-# 길이만큼 반복할 것이기 때문에
-x_len = len(x)
-y_len = len(y)
+a = input()
+b = input()
 
-# 2차원 배열 dp 테이블 생성
-dp = [[0 for _ in range(y_len + 1)] for _ in range(x_len + 1)]  # 1-based
+# 부분 수열 중 가장 긴 것
+cache = [[0] * (len(b) + 1) for _ in range(len(a) + 1)]
 
-for i in range(1, x_len + 1):
-    for j in range(1, y_len + 1):
-        # 1. 문자열 X의 i번째 문자와 문자열 Y의 j번째 문자가 서로 같은 경우
-        if x[i - 1] == y[j - 1]:  # LCS가 맞음
-            dp[i][j] = dp[i - 1][j - 1] + 1  # X[i], Y[j]를 포함하기 전의 LCS에 1을 더한 값과 같음
-        else:  # 문자열 X의 i번째 문자와 문자열 Y의 j번째 문자가 서로 다른 경우
-            dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])  # LCS가 아님
+for i in range(1, len(a) + 1):
+    for j in range(1, len(b) + 1):
+        if a[i - 1] == b[j - 1]:  # 현재 문자 같으면
+            # 이전까지의 LCS 길이 +1
+            cache[i][j] = cache[i - 1][j - 1] + 1
+        else:  # 같지 않을 경우에
+            # 이전 행, 열에서 더 큰 값.
+            cache[i][j] = max(cache[i - 1][j], cache[i][j - 1])
             
-print(dp[x_len][y_len])
+print(cache[-1][-1])  # 최장 공통 부분 수열 출력.
