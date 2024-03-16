@@ -1,0 +1,10 @@
+-- 코드를 입력하세요
+-- WAREHOUSE_ID, WAREHOUSE_NAME, ADDRESS, FREEZER_YN 출력
+-- 창고 주소가 '경기도'인것만 출력.
+-- NULL인 경우 N으로 출력 -> ifnull(컬럼명,'N') 사용
+-- 창고 ID 기준으로 오름차순 정렬
+
+SELECT WAREHOUSE_ID, WAREHOUSE_NAME, ADDRESS, ifnull(FREEZER_YN,'N') FREEZER_YN
+FROM FOOD_WAREHOUSE
+WHERE ADDRESS LIKE '경기도%'
+ORDER BY WAREHOUSE_ID
