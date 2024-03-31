@@ -1,17 +1,42 @@
+# 마라톤 참여: participant
+# 완주 선수: completion
+# 완주하지 못한 선수?
 def solution(participant, completion):
-    # 문자열로 key 관리 -> hash 사용
-    
-    d = {}
-    
+    answer = ''
+    # 참여 선수를 딕셔너리로 저장 -> 딕셔너리는 키 중복 안됨에 주의
+    dic = {}
     for p in participant:
-        if p not in d: # hash에 없을 경우
-            d[p]=1 # 초기화
-        else: # hash에 있을 경우(동명이인)
-            d[p]+=1
+        if p not in dic:
+            dic[p]=0
+        else:
+            dic[p]+=1
     
+    # 완주 선수가 딕셔너리의 키로 있다면
     for c in completion:
-        d[c]-=1
+        if dic[c]==0: # 값이 0이면 딕셔너리에서 삭제
+            del dic[c]
+        else: # 값이 1 이상이면
+            dic[c]-=1
+            
+    # 값이 0인 요소 출력
+    for d in dic:
+        answer= d
+ 
+
+    return answer
+  
+
+
+
+# 시간초과
+# def solution(participant, completion):
+#     # p-c 해서 남은 선수가 완주 x
+#     participant.sort()
+#     completion.sort()
+#     for p in participant:
+#         for c in completion:
+#             if p==c:
+#                 participant.remove(c)
     
-    for k, v in d.items():
-        if v>0:
-            return k
+#     answer = p
+#     return answer
