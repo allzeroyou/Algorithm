@@ -1,18 +1,30 @@
 t = int(input())
 
-for tc in range(1, t + 1):
-    n = int(input())
-    # 뒤에서부터 탐색한다. (가격을 미리 알고있기에)
-    price = list(map(int, input().split()))[::-1]
-    # 이익
-    profit = 0
-    # 현재 가격
-    now_price = price[0]
+# 여러개의 테스트 케이스가 주어지므로, 각각을 처리합니다.
+for test_case in range(1, t + 1):
+    # 최대이익
+    ans = 0
 
-    for i in range(1, n):
-        # 현재 금액이 더 높다면
-        if now_price > price[i]:
-            profit += now_price - price[i]
-        else:
-            now_price = price[i]
-    print(f'#{tc} {profit}')
+    # 개수
+    n = int(input())
+    nums = list(map(int, input().split()))
+
+    # 범위 탐색용
+    start = -1
+    end = -1
+
+    # 탐색
+    while start < n - 1:
+        # 최대 매매가
+        max_val = 0
+        # 가장 높은 매매가의 인덱스 구하기
+        for j in range(end + 1, n):
+            if nums[j] > max_val:
+                max_val = nums[j]
+                end = j
+
+        for i in range(start + 1, end):
+            ans += (max_val - nums[i])
+        start = end
+
+    print(f'#{test_case} {ans}')
