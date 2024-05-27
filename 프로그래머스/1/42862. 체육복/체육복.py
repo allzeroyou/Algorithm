@@ -1,31 +1,31 @@
-# 자기 앞, 뒤 숫자 사용
-
 def solution(n, lost, reserve):
-    # 체육복 빌릴 수 있는 사람 개수
     answer = 0
-
-
-    # 도난 당한 학생이 여분 가져온 경우를 제외 -> set 형식으로 변경헤준 뒤 차집합 구함.
-    lost, reserve = list(set(lost) - set(reserve)), list(set(reserve) - set(lost))
-    # 순서 정렬 필요(체육복 최대한 빌려주는 경우만 고려)
-    lost.sort()
-    reserve.sort()
-
-    # 자기 앞, 뒤 숫자
-    around = []
-    # 체육복 잃은 학생
+    # 여벌 체육복이 있는 학생 -> 체육복 빌려줄 수 있음
+    # 학생들 번호: 체격순
+    # 앞 번호, 뒷 번호 학생에게만 빌려줄 수 있음
+    # 최대한 많은 학생이 체육 수업을 듣도록(여벌 + 도난당했지만 채육복 빌린 학생)
+    
+    # 학생 만들기
+    st = []
+    for i in range(1, n+1):
+        st.append(i)
+    # 체육복 빌릴 수 있는 후보 만들기
+    # 여분 가져온 학생이 도난 당했을 경우 제외
+    lost, reserve = list(set(lost)-set(reserve)), list(set(reserve)-set(lost))
+    
+    ca = []
     for l in lost:
-        # 앞/뒤 번호 구하기
-        around.append((l - 1, l + 1))
-    # 여분 체육복
-    for r in reserve:  # 1
-        for num in around:  # [(1, 3), (3, 5)]
-            if r in num:  # 튜플이므로 in 연산자 사용
-                answer += 1
-                around.remove(num)
+        ca.append((l-1, l+1))
+    
+    for r in reserve:
+        for c in ca:
+            if r in c: # 체육복 빌릴 수 있는 경우
+                answer+=1
+                ca.remove(c) # 체육복 후보에서 제외
                 break
 
-    lost_stu = len(lost)
-    # print(n - lost_stu + answer)
-
-    return n - lost_stu + answer
+    # 학생 - 도난 당한 학생 + 빌릴 수 있는 학생
+    return n - len(lost) + answer
+                
+    
+    return answer
