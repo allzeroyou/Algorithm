@@ -9,7 +9,8 @@ from collections import deque
 def solution(x, y, n):
     answer = 0
     # 1. 큐 초기화
-    q = deque([(x, 0)]) # 시작값: x, 연산횟수: 0
+    q = deque() # 시작값: x, 연산횟수: 0
+    q.append((x,0))
     visited = set([x]) # 방문 배열 초기화-> 중복 없으므로 집합 사용
     
     # 2. 큐 탐색
