@@ -1,7 +1,17 @@
 -- 코드를 입력하세요
--- 2022년 5월인 식품들의 식품 ID, 식품 이름, 총매출을 조회
-SELECT p.PRODUCT_ID, p.PRODUCT_NAME, SUM(o.AMOUNT)*p.PRICE as TOTAL_SALES
-FROM FOOD_PRODUCT as p, FOOD_ORDER as o
-where p.PRODUCT_ID = o.PRODUCT_ID AND o.PRODUCE_DATE LIKE "2022-05%"
-group by 1
-order by 3 desc, 1;
+-- product: 식품정보
+-- order: 식품주문정보
+-- 생산일자가 2022년 5월인 식품들의 id, 이름, 총매출 조회
+-- 정렬: 총매출 내림차순, 총매출 같다면 id기준 오름차순
+
+SELECT 
+    FP.PRODUCT_ID,
+    FP.PRODUCT_NAME,
+    SUM(FO.AMOUNT*FP.PRICE) AS TOTAL_SALES
+FROM FOOD_PRODUCT FP
+JOIN FOOD_ORDER FO ON FP.PRODUCT_ID=FO.PRODUCT_ID
+WHERE PRODUCE_DATE LIKE '2022-05%'
+GROUP BY FP.PRODUCT_ID
+ORDER BY
+    TOTAL_SALES DESC,
+    FP.PRODUCT_ID;
