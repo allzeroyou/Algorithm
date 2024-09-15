@@ -5,9 +5,9 @@ import java.util.*;
 
 class Solution {
  // 모음 순서를 저장하는 배열
-    private final String[] VOWELS = {"A", "E", "I", "O", "U"};
+    static String[] mo = {"A", "E", "I", "O", "U"};
     // 각 자리수별 경우의 수를 저장하는 배열
-    private final int[] WEIGHTS = {781, 156, 31, 6, 1};
+    static int[] WEIGHTS = {781, 156, 31, 6, 1};
     
     public int solution(String word) {
         int answer = 0;
@@ -15,7 +15,7 @@ class Solution {
         // 단어의 각 글자에 대해 반복
         for (int i = 0; i < word.length(); i++) {
             // 현재 글자의 인덱스를 찾음
-            int index = Arrays.asList(VOWELS).indexOf(word.substring(i, i+1));
+            int index = Arrays.asList(mo).indexOf(word.substring(i, i+1));
             // 해당 글자 이전의 모든 경우의 수를 더함
             answer += index * WEIGHTS[i] + 1;
         }
