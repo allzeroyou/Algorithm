@@ -1,28 +1,25 @@
-// 숫자를 더하거나 빼서 타겟넘버 만듦
-// 모든 경우의 수 탐색 -> dfs
-class Solution {
-    int answer = 0;
+// n개의 음이 아닌 정수
+// 정수들을 "순서를 바꾸지 않고", "적절히" +,- 연산자 "배치"을 통해 타겟넘버 만드려고 함.
+// 타겟 만드는 경우의 수 반환
+import java.util.*;
 
+class Solution {
+    
     public int solution(int[] numbers, int target) {
+        int answer = 0;
+        // dfs 수행: 타겟넘버가 나올때 반환
+ 
         
-        dfs(numbers, target, 0,0);
-        
-        return answer;
+        return dfs(numbers, target, 0, 0);
     }
-    private void dfs(int[] numbers, int target, int idx, int sum){
-        // 종료조건: 모든 숫자 사용시
-        if(idx == numbers.length){
-            // 합계가 타겟넘버라면 정답 카운트
-            if(sum==target){
-                answer++;
-            }
-            return;
+    // dfs 매개변수: 현재 상태를 나타내는 정보를 매개변수로 넘김!(이를 이용해 탐색 이어나감)
+    public int dfs(int[] numbers, int target, int sum, int idx ){ // sum:현재까지 합, idx: 현재 탐색할 인덱스
+        if(idx==numbers.length){
+            return sum==target? 1: 0; // 타겟넘버가 되었을때 1, 아니면 0 반환
         }
-        // 현재 숫자 더함
-        dfs(numbers, target, idx+1, sum+numbers[idx]);
-        
-        // 현재 숫자 뺌
-        dfs(numbers, target, idx+1, sum-numbers[idx]);
-        
+        // +, -를 적절히 어떻게 배치하지... -> 배치하는게 아니라 그냥 재귀적으로 계속 수행
+        int add = dfs(numbers, target, sum+numbers[idx], idx+1);
+        int sub = dfs(numbers, target, sum-numbers[idx], idx+1);
+       return add+sub; // 두 경우의 수를 합해 반환
     }
 }
