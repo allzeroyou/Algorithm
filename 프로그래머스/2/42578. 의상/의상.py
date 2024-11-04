@@ -1,16 +1,18 @@
 def solution(clothes):
-    answer = 0
+    answer = 1
+    # 최소 1개의 이상 착용해야 함 -> 의상 착용 O,X 2가지 경우임. 따라서 선택지는 해당 의상개수 +1(=안 입는 경우)
+    # 각 종류별 최대 1가지 의상 착용 가능
     
-    d={} # 의상저장 해시
+    # 딕셔너리 key-value로 저장
+    dic = {}
     
-    for c in clothes:
-        if c[1] not in d:
-            d[c[1]]=2 # 입었을 때 + 안 입었을 때 -> 경우의 수: 2
+    for cloth in clothes:
+        if cloth[1] not in dic:
+            dic[cloth[1]]=1
         else:
-            d[c[1]]+=1
+            dic[cloth[1]]+=1 
+    # 조합 계산
+    for com in dic.values():
+        answer *= (com+1)
     
-    cnt = 1 # 의상 조합 개수
-    for num in d.values():
-        cnt *= num
-        
-    return cnt-1 # 의상을 하나도 안 입었을때 경우의 수 빼주기
+    return answer -1 # 의상을 아무것도 안 입는 경우 제외
