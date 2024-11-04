@@ -1,19 +1,16 @@
 def solution(phone_book):
     answer = True
     
-    d = {} # 문자열이 key -> 해시 이용
+    # 전화번호가 다른 전화번호의 접두어인지 판단
+    # 접두어인지 어캐 판단하지
+    # in ?
+    # 시간복잡도 고려해야함. 그냥 for문 돌면 시초날수도
     
-    for p in phone_book:
-        if p not in d:
-            d[p]=1
-            
+    phone_book.sort() # 정렬
     
-    for p in phone_book:
-        tmp = '' # 문자열 비교용
-        for n in p: # 전화번호를 순회하면서
-            tmp += n
-            if tmp in d and tmp!=p:
-                answer=False
-            
-        
+    for i in range(len(phone_book)-1):
+        if phone_book[i+1].startswith(phone_book[i]):
+            answer= False
+
+
     return answer
