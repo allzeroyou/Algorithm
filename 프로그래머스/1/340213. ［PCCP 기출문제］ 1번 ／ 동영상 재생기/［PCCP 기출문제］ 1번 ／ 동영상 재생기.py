@@ -16,35 +16,31 @@ def solution(video_len, pos, op_start, op_end, commands):
 
         return lst
 
-    lst =get_sec(video_len, pos, op_start, op_end)
+    lst = get_sec(video_len, pos, op_start, op_end)
     
     # 비디오 길이, 현재위치, 오프닝시작, 오프닝끝
     video, cur, start, end = lst
     
-    # 공통 로직이므로 -> 아예 반복문 밖으로 빼기!
-    if start<=cur<=end:
-        cur = end
+
         
     for com in commands:
+        # 실행 전에 오프닝 구간이라면!
+        if start<=cur<=end:
+            cur = end
         if com == 'prev':
             cur = max(0, cur-10) # cur-10가 0미만일경우, 0으로 만드는 코드 기법!
 
         elif com == 'next': # next
             cur = min(video, cur+10) 
+            
+        # 실행 후에도 오프닝 구간이라면!
         if start<=cur<=end:
             cur = end
             
     #print(cur)
     # 결과출력
     # 초 -> 분으로 나누기
-    m = str(cur//60)
-    s = str(cur % 60)
-    
-    if len(m)<2:
-        m='0'+m
-    if len(s)<2:
-        s='0'+s
-    answer = ''
-    answer = m+':'+s
-    
-    return answer
+    m = cur//60
+    s = cur % 60
+
+    return f"{m:02d}:{s:02d}"
