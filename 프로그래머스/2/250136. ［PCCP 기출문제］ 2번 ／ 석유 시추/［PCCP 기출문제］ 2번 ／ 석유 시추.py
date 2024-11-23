@@ -1,53 +1,52 @@
-# 정확성, 효율성 테스트 -> 재귀함수 주의, 시간복잡도 고려
-
-# 알고리즘: bfs
-# 2단계
-# 1. 석유덩어리 크기 구하기
-# 2. 어떤 컬럼에 꽂아야 최댓값?
-from collections import deque 
+# 1.석유 덩어리 크기 구하기
+# 2.컬럼에 석유 덩어리 크기 저장하기(시추관 뚫기용)
+from collections import deque
 
 def solution(land):
-    row = len(land) # 세로(row)
-    col = len(land[0]) # 가로(col)
-    visited = [[False]*col for _ in range(row)]
-    dx = [1, -1, 0, 0]
-    dy = [0, 0, -1, 1]
-
-    # 컬럼에 석유덩어리 크기 저장!!
-    oil_size = dict()
+    answer = 0
     
-    for i in range(row):
-        for j in range(col):
-            oil = 0
+    n = len(land) # row
+    m = len(land[0]) # col
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, 1, -1]
+    visited = [[False]*m for _ in range(n)]
+
+    # 컬럼에 저장용
+    dic = {}
+    
+    # bfs
+    for i in range(n):
+        for j in range(m):
+            # 석유덩어리 
+            cnt = 0 # 초기화 반복문 안에서임 주의
             
             if land[i][j]==1 and not visited[i][j]:
-                q = deque([(i,j)]) # 큐에 삽입
-                visited[i][j]=True # 방문처리
-                # 석유덩어리 크기
-                oil +=1
-                # 현재 열 저장
-                columns = set()
+                q = deque([(i,j)])
+                visited[i][j]=True
+                cnt+=1
+                # 현재 열 저장용(중복 방지)
+                columns = set() 
                 
                 while q:
-                    x, y = q.popleft()
-                    columns.add(y) # 현재 열 더하기!
-
+                    x,y = q.popleft()
+                    columns.add(y) # 현재 열 더하기
+                    
                     for k in range(4):
-                        nx = x + dx[k]
-                        ny = y + dy[k]
-                        if 0<=nx<row and 0<=ny<col and not visited[nx][ny] and land[nx][ny]==1:
+                        nx = x+dx[k]
+                        ny = y+dy[k]
+                        if 0<=nx<n and 0<=ny<m and land[nx][ny]==1 and not visited[nx][ny]:
                             q.append((nx,ny))
                             visited[nx][ny]=True
-                            oil +=1
-                            
-                # 현재 석유덩어리 다 셈 -> 현재 석유덩어리가 속한 열에 크기 누적
+                            cnt+=1
+                # 큐가 끝났을때 석유덩어리 다 셈
+                # 코드 헷갈림 주의
                 for column in columns:
-                    if column not in oil_size:
-                        oil_size[column]=oil
+                    if column not in dic:
+                        dic[column]=cnt
                     else:
-                        oil_size[column]+=oil
-    # {컬럼: 석유덩어리 크기}
-    # 기 댓 값: { 1:8, 2:8, 3:8, 4:7, 5:7, 6:7, 7:7+2, 8:2, 9:2} )
-    # 현재 출력: {0: 8, 1: 0, 2: 0, 3: 7, 4: 0, 5: 0, 6: 2, 7: 0}
+                        dic[column]+=cnt
     
-    return max(oil_size.values())
+    print(dic)
+
+    
+    return max(dic.values())
