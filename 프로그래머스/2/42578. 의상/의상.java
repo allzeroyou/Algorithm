@@ -1,28 +1,30 @@
-// 옷 조합
+// 다른 옷 조합
+// 서로 다른 조합 수 return
+// HashMap 사용: key-의상 종류, value-의상
+// 각 의상종류에 입지 않는 경우도 꼭 추가해준다
+// 단, 아무것도 입지 않는 경우는 제외!
+
 import java.util.*;
 
 class Solution {
     public int solution(String[][] clothes) {
-        // 최소 1개 이상 의상 입어야 함
-        // [의상이름, 의상종류]
-        // map[의상종류]=의상개수
         
+        // 1. 의상 종류별로 구분하기-해시맵 사용
         HashMap<String, Integer> map = new HashMap<>();
         
-        for(int i=0; i<clothes.length; i++){
-            map.put(clothes[i][1], map.getOrDefault(clothes[i][1],0)+1);
+        for(String[] clothe : clothes){
+            String type = clothe[1]; // 종류만 꺼내준다
+            map.put(type, map.getOrDefault(type,0)+1);
         }
-        // 해시 맵 잘 들어왔는지 체크
-        // String sArr = map.toString();
-        // System.out.println(sArr);
+        // 2. 각 의상종류에 입지 않는 경우 추가해 조합 계산
+        Iterator<Integer> iter = map.values().iterator();
         
-        // 가능한 조합 수 계산    
-        int answer = 1;
-        for(int cnt: map.values()){
-            answer = answer*(cnt+1); // 입는 경우, 안 입는 경우
+        Integer answer = 1;
+        while(iter.hasNext()){
+            answer *= iter.next() + 1;
         }
-        answer -= 1; // 아무것도 안 입는 경우 제외
         
-        return answer;
+        // 3. 단, 아무것도 입지않은 경우는 제외
+        return answer-1;
     }
 }
