@@ -1,36 +1,28 @@
-import java.util.Arrays;
-import java.util.Comparator;
-
+import java.util.*;
 
 class Solution {
-    public String solution(int[] numbers) { 
-        // 0또는 양의 정수-> 정수를 이어 붙여 만들 수 있는 가장 큰수?
-        // Java Comparator -> 커스텀 정렬 로직 구현
-    
-        // String 배열로 변환
-        String[] strNum = new String[numbers.length];
-        for(int i = 0; i<numbers.length;i++){
-            strNum[i] = String.valueOf(numbers[i]);
-        }
-        // Comparator를 사용해 정렬
-        Arrays.sort(strNum, new Comparator<String>(){
-            @Override
-            public int compare(String a, String b){
-                return (b+a).compareTo(a+b);
-            }
-        });
+    public String solution(int[] numbers) {
+        String answer = "";
         
-        // 정렬된 숫자들을 하나의 문자열로 연결
-        StringBuilder answer = new StringBuilder();
-        for(String s: strNum){
-            answer.append(s);
+        // 1. 정수를 문자열로 변환
+        String[] strNum = new String[numbers.length];
+        
+        for(int i=0; i<numbers.length; i++){
+            strNum[i]= String.valueOf(numbers[i]);
         }
-        // 맨 앞이 0인 경우 (즉, 모든 숫자가 0인경우) "0"반환
-        if(answer.charAt(0)=='0'){
+        
+        // 2. 문자열 배열 정렬: 내림차순
+        Arrays.sort(strNum, (a,b)->(b+a).compareTo(a+b));
+        
+        
+        // 3. 정렬된 문자열을 이어 붙이기
+        answer = String.join("", strNum);
+        
+        // 4. 예외처리([0,0]일 경우 "00"이 아닌 0이어야 함
+        if(strNum[0].equals("0")){
             return "0";
         }
-        return answer.toString();
         
-  
+        return answer;
     }
 }
