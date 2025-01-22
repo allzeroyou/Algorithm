@@ -1,47 +1,62 @@
-// 전선을 하나씩 제거 -> 네트워크 두개로 나누기
-// 각 부분의 송전탑 개수 계산
-// 두 부분의 송전탑 개수 차이 계산, 최솟값 리턴
-
 import java.util.*;
-class Solution {
-    public int solution(int n, int[][] wires) {
-        int answer = n; // 최대로 가능한 차이값으로 설정
 
-        // 인접리스트로 그래프 표현
-        List<List<Integer>>graph = new ArrayList<>();
-        for(int i=0; i<=n; i++){
-            graph.add(new ArrayList<>());
+class Solution {
+    // 1. 인접리스트 생성
+    HashMap<Integer, List<Integer>> map = new HashMap<>();
+    
+    public int solution(int n, int[][] wires) {
+        int answer = -1;
+        
+        for(int[] wire : wires){
+            map.putIfAbsent(wire[0], new ArrayList<>());
+            map.putIfAbsent(wire[1], new ArrayList<>());
+            map.get(wire[0]).add(wire[1]);
+            map.get(wire[1]).add(wire[0]); // 양방향 그래프
         }
-        // 그래프 구성
-        for(int[] wire: wires){
-            // 연결 정보 추가-양방향
-            graph.get(wire[0]).add(wire[1]);
-            graph.get(wire[1]).add(wire[0]);
             
-        }
-        // 각 전선을 끊으며 최소 차이 계산
+        // 2. 각 전선을 하나씩 제거해보고 두 전력망 크기 차이 계산
+        int minDiff = n; // 크기 차이 최솟값        
+        
         for(int[] wire: wires){
-            graph.get(wire[0]).remove(Integer.valueOf(wire[1]));
-            graph.get(wire[1]).remove(Integer.valueOf(wire[0]));
-            boolean[] visited = new boolean[n+1]; // 각 DFS 호출마다 새로운 visited 배열 생성
-            int cnt = dfs(1, graph, visited); // 1번에서 시작
-            int diff = Math.abs(cnt - (n-cnt)); // 차이
-            answer = Math.min(answer, diff);
-            // 끊었던 전선 복구
-            graph.get(wire[0]).add(wire[1]);
-            graph.get(wire[1]).add(wire[0]);
+            // 전선 제거
+            map.get(wire[0]).remove(Integer.valueOf(wire[1]));
+            map.get(wire[1]).remove(Integer.valueOf(wire[0]));
+            
+            // bfs로 연결 개수 계산
+            int size = bfs(wire[0], n);
+            
+            // 차이 계산
+            int diff = Math.abs(n- 2*size); // |(n-size)-size|이므로
+            minDiff = Math.min(diff, minDiff);
+            
+            // 전선 복구
+            map.get(wire[0]).add(wire[1]);
+            map.get(wire[1]).add(wire[0]);
         }
-        return answer;
+        
+        return minDiff;
     }
-    // dfs로 연결된 노드수 계산
-    public int dfs(int node, List<List<Integer>> graph, boolean[] visited){
-        visited[node]=true;
-        int cnt = 1;
-        for(int nei: graph.get(node)){
-            if(!visited[nei]){
-                cnt += dfs(nei, graph, visited);
+     // 3. bfs
+    private int bfs(int start, int n){
+        Queue<Integer> q = new LinkedList<>(); // 큐 생성
+        boolean[] visited = new boolean[n+1]; // 방문체크
+        q.offer(start);
+        visited[start]=true;
+        
+        int size = 0; // 크기
+        
+        while(!q.isEmpty()){
+            int node = q.poll();
+            size ++;
+            
+            // 연결 요소 구하기
+            for(int nei: map.get(node)){
+                if(!visited[nei]){
+                    q.offer(nei);
+                    visited[nei]=true;
+                }
             }
         }
-        return cnt;
+        return size;
     }
 }
