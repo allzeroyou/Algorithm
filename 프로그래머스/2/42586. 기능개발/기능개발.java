@@ -2,7 +2,6 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        int[] answer = {};
         // 값 수정이 가능하게끔 arraylist로
         List<Integer> ans = new ArrayList<>();
     
@@ -29,6 +28,12 @@ class Solution {
         }
         ans.add(cnt); // 마지막 그룹까지 추가
         
-        return ans.stream().mapToInt(Integer::intValue).toArray();
+        int[] answer = new int[ans.size()];
+        
+        for(int i=0; i<answer.length; i++){
+            answer[i]=ans.get(i);
+        }
+        
+        return answer;
     }
 }
