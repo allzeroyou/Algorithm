@@ -7,9 +7,8 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int n = Integer.parseInt(br.readLine());
 
-        // 일 걸리는 시간
+        // 시간, 이익 저장
         int[] t = new int[n];
-        // 이익
         int[] p = new int[n];
 
         for (int i = 0; i < n; i++) {
@@ -18,23 +17,21 @@ public class Main {
             p[i] = Integer.parseInt(st.nextToken());
         }
 
-        // 1. dp 테이블: 이익 최댓값 저장
+        // dp 테이블: n일째 최대이익
         int[] dp = new int[n + 1];
 
-        // 2. 초기값 설정
-
-        // 3. 점화식
         for (int i = 0; i < n; i++) {
-            // 다음날
-            int nxtDay = i + t[i]; // 현재 날짜 + 일이 끝나는 날짜
+            int nxtDay = i + t[i];
 
-            // 현재 작업 수행
-            if (nxtDay <= n) { // n+1 일째는 불가
-                dp[nxtDay] = Math.max(dp[i] + p[i], dp[nxtDay]);
+            if (nxtDay <= n) {
+                dp[nxtDay] = Math.max(dp[nxtDay], dp[i] + p[i]);
             }
-            // 현재 작업 수행 x -> 일이 끝나는 날에 이익 얻음
-            dp[i + 1] = Math.max(dp[i + 1], dp[i]);
+            // 일이 끝날때까지 이익 누적
+            if (i <= n) { // 마지막 날이 아닐때만 다음 날로 이익 이월시킨다!
+                dp[i + 1] = Math.max(dp[i + 1], dp[i]);
+            }
         }
+
         System.out.println(dp[n]);
     }
 }
